@@ -9,7 +9,5 @@ int main()
 {
     SetConsoleOutputCP(65001);
     cout << "Héllo World" << endl;
-    cout << "JE SUIS THOMAS" << endl;
-    cout << "FIN" << endl;
     return 0;
 }
