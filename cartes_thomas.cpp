@@ -28,3 +28,21 @@ CarteDeRevision Deck::deserialiserCarte(const string& ligneCSV)
     getline(iss, verso);
     return CarteDeRevision(recto, verso);
 }
+
+void Deck::chargerCartes()
+{
+    ifstream fichier(fichierCSV_); // ouvrir fichier en mode lecteur
+    if (!fichier) {
+        cerr << "Erreur : Impossible d'ouvrir le fichier" << endl;
+        return;
+    }
+
+    string ligne;
+    while (getline(fichier, ligne)) 
+    //la boucle lis chaque ligne du fichier et la stocke dans la variable ligne
+    {
+        CarteDeRevision carte = deserialiserCarte(ligne);
+        deck_.push_back(new CarteDeRevision(carte)); //utilisation du constructeur de copie de CarteDeRevision
+    }
+
+}

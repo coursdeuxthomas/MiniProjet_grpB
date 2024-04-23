@@ -18,9 +18,9 @@ private:
 public:
     // Constructeur
     CarteDeRevision(const string& recto = "a", const string& verso = "a") : recto_(recto), verso_(verso), facteur_difficulte_(1.0), score_difficulte_(1), date_revision_("2000-01-01") {}
-    const string getRecto() const { return recto_; }
+    const string& getRecto() const { return recto_; }
     void setRecto(const string& recto);
-    const string getVerso() const { return verso_; }
+    const string& getVerso() const { return verso_; }
     void setVerso(const string& verso);
 }; //THOMAS.B
 
@@ -38,14 +38,16 @@ public:
     // Méthode privée pour désérialiser une ligne CSV en une carte
     static CarteDeRevision deserialiserCarte(const string& ligneCSV);
 
-    ////Constructeur
-    //Deck(const std::string& fichierCSV);
+    //Constructeur
+    Deck(const string& fichierCSV) : fichierCSV_(fichierCSV) {}
+    
+    //Le constructeur Deck est initialisé avec le chemin vers le fichierCSV et il prend la valeur de vector<CarteDeRevision *> deck_ par défaut qui est le vecteur vide.
 
-    //// Méthode pour charger les cartes depuis le fichier CSV
-    //void chargerCartes();
+    // Méthode pour charger les cartes depuis le fichier CSV
+    void chargerCartes();
 
-    //// Méthode pour sauvegarder les cartes dans le fichier CSV
-    //void sauvegarderCartes() const;
+    // Méthode pour sauvegarder les cartes dans le fichier CSV
+    void sauvegarderCartes() const;
 
     //// Méthode pour ajouter une carte au deck
     //void ajouterCarte(const CarteDeRevision& carte);
@@ -54,7 +56,7 @@ public:
     //void supprimerCarte(int index);
 
     //// Accesseur pour récupérer les cartes
-    //const std::vector<CarteDeRevision>& getCartes() const;
+    //const vector<CarteDeRevision>& getCartes() const;
 };
 
 
