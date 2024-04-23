@@ -26,42 +26,32 @@ private:
     vector<CarteDeRevision *> deck_; // Vecteur pour stocker les cartes
     string fichierCSV_; // Chemin vers le fichier CSV
 
-    // Méthode privée pour sérialiser une carte au format CSV
-    string serialiserCarte(const CarteDeRevision& carte) const 
-    {
-        return carte.getRecto() + "," + carte.getVerso();
-    }
-
-    // Méthode privée pour désérialiser une ligne CSV en une carte
-    CarteDeRevision deserialiserCarte(const std::string& ligneCSV) const {
-        istringstream iss(ligneCSV);
-        string recto, verso;
-        getline(iss, recto, ',');
-        getline(iss, verso);
-        return CarteDeRevision(recto, verso);
-    }
-
-   
-
-
 public:
-    /*Constructeur
-    Deck(const std::string& fichierCSV);
+    // Méthode privée pour sérialiser une carte au format CSV
+    static string serialiserCarte(const CarteDeRevision& carte);
+    
+    // "static" permet d'appeler la méthode serialiserCarte sans avoir besoin de créer un objet ou une instance Deck, en fait la méthode peut-être appelée sans avoir besoin d'être lié ou relatif à un objet (c'est le contraire de carte.getRecto() par exemple), voire nouvelle syntaxe dans le main test. Attention on ne précise le fait que la ùéthode est static seulement dans le fichier .h et pas dans le fichier .cpp.
+    
+    // Méthode privée pour désérialiser une ligne CSV en une carte
+    static CarteDeRevision deserialiserCarte(const string& ligneCSV);
 
-    // Méthode pour charger les cartes depuis le fichier CSV
-    void chargerCartes();
+    ////Constructeur
+    //Deck(const std::string& fichierCSV);
 
-    // Méthode pour sauvegarder les cartes dans le fichier CSV
-    void sauvegarderCartes() const;
+    //// Méthode pour charger les cartes depuis le fichier CSV
+    //void chargerCartes();
 
-    // Méthode pour ajouter une carte au deck
-    void ajouterCarte(const CarteDeRevision& carte);
+    //// Méthode pour sauvegarder les cartes dans le fichier CSV
+    //void sauvegarderCartes() const;
 
-    // Méthode pour supprimer une carte du deck
-    void supprimerCarte(int index);
+    //// Méthode pour ajouter une carte au deck
+    //void ajouterCarte(const CarteDeRevision& carte);
 
-    // Accesseur pour récupérer les cartes
-    const std::vector<CarteDeRevision>& getCartes() const;*/
+    //// Méthode pour supprimer une carte du deck
+    //void supprimerCarte(int index);
+
+    //// Accesseur pour récupérer les cartes
+    //const std::vector<CarteDeRevision>& getCartes() const;
 };
 
 
