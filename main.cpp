@@ -25,7 +25,7 @@ int main()
 	cout << "Texte de la carte serialiser : " << carteseria << endl;
 	CarteDeRevision carteDeseria = Deck::deserialiserCarte(carteseria);
 	cout << "Recto de la carte deseria : " << carteDeseria.getRecto() << endl;
-	cout << "Verso de la carte deseria : " << carteDeseria.getVerso() << endl;
+	cout << "Verso de la carte deseria : " << carteDeseria.getVerso() << endl; 
 	
 
 

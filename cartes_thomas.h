@@ -13,11 +13,11 @@ private:
     string verso_;
     // il faut rajouter les facteurs pour l'algorithme sm2 : le facteur de difficulté (type double), le score de difficulté (différent du facteur, de type entier entre 1 et 5) et la date de PROCHAINE révision (au format : "AAAA-MM-JJ")
     double facteur_difficulte_;
-    int score_difficulté_;
+    int score_difficulte_;
     string date_revision_;
 public:
     // Constructeur
-    CarteDeRevision(const string& recto = "a", const string& verso = "a") : recto_(recto), verso_(verso) {}
+    CarteDeRevision(const string& recto = "a", const string& verso = "a") : recto_(recto), verso_(verso), facteur_difficulte_(1.0), score_difficulte_(1), date_revision_("2000-01-01") {}
     const string getRecto() const { return recto_; }
     void setRecto(const string& recto);
     const string getVerso() const { return verso_; }
