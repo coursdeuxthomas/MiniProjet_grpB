@@ -57,6 +57,9 @@ public:
 
     //// Accesseur pour récupérer les cartes
     //const vector<CarteDeRevision>& getCartes() const;
+
+    ////Méthode pour changer la prochaine date de  révision
+    // void setDateRevision (const string & nouvelle_date)
 };
 
 
