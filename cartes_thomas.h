@@ -11,7 +11,10 @@ class CarteDeRevision {
 private:
     string recto_;
     string verso_;
-
+    // il faut rajouter les facteurs pour l'algorithme sm2 : le facteur de difficulté (type double), le score de difficulté (différent du facteur, de type entier entre 1 et 5) et la date de PROCHAINE révision (au format : "AAAA-MM-JJ")
+    double facteur_difficulte_;
+    int score_difficulté_;
+    string date_revision_;
 public:
     // Constructeur
     CarteDeRevision(const string& recto = "a", const string& verso = "a") : recto_(recto), verso_(verso) {}
