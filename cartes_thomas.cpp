@@ -25,7 +25,7 @@ CarteDeRevision Deck::deserialiserCarte(const string& ligneCSV)
     istringstream iss(ligneCSV);
     string recto, verso;
     getline(iss, recto, ',');
-    getline(iss, verso);
+    getline(iss, verso, ',');
     return CarteDeRevision(recto, verso);
 }
 
