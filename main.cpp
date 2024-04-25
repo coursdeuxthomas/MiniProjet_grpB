@@ -23,9 +23,9 @@ int main()
 	CarteDeRevision carte("recto", "verso");
 	string carteseria = Deck::serialiserCarte(carte);
 	cout << "Texte de la carte serialiser : " << carteseria << endl;
-	CarteDeRevision carteDeseria = Deck::deserialiserCarte(carteseria);
+	CarteDeRevision carteDeseria = Deck::deserialiserCarte("Quelle est la capitale de la France,Paris,1.00,1,2024-04-23");
 	cout << "Recto de la carte deseria : " << carteDeseria.getRecto() << endl;
-	cout << "Verso de la carte deseria : " << carteDeseria.getVerso() << endl; 
+	cout << "Verso de la carte deseria : " << carteDeseria.getVerso() << endl;  
 	
 
 

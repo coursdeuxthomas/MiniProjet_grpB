@@ -46,8 +46,8 @@ public:
     // Méthode pour charger les cartes depuis le fichier CSV
     void chargerCartes();
 
-    // Méthode pour sauvegarder les cartes dans le fichier CSV
-    void sauvegarderCartes() const;
+    /* Méthode pour sauvegarder les cartes dans le fichier CSV
+    void sauvegarderCartes() const;*/
 
     //// Méthode pour ajouter une carte au deck
     //void ajouterCarte(const CarteDeRevision& carte);
