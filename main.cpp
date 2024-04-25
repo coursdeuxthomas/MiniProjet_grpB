@@ -20,12 +20,30 @@ int main()
 	cout << "verso : " << pythagore.getVerso()<<endl;
 	return 0;*/
 
-	CarteDeRevision carte("recto", "verso");
+	/*CarteDeRevision carte("recto", "verso");
 	string carteseria = Deck::serialiserCarte(carte);
 	cout << "Texte de la carte serialiser : " << carteseria << endl;
 	CarteDeRevision carteDeseria = Deck::deserialiserCarte("Quelle est la capitale de la France,Paris,1.00,1,2024-04-23");
 	cout << "Recto de la carte deseria : " << carteDeseria.getRecto() << endl;
-	cout << "Verso de la carte deseria : " << carteDeseria.getVerso() << endl;  
+	cout << "Verso de la carte deseria : " << carteDeseria.getVerso() << endl;*/  
+
+	Deck myDeck("fichierCSV");
+	CarteDeRevision carte0("recto", "verso");
+	CarteDeRevision carte1("Capitale France ?", "Paris");
+	CarteDeRevision carte2("Nom du frère", "Bastien");
+	CarteDeRevision carte3("doliprane", "paracetamol");
+	myDeck.chargerCartes();
+	myDeck.ajouterCarte(carte0);
+	myDeck.ajouterCarte(carte1);
+	myDeck.ajouterCarte(carte2);
+	myDeck.ajouterCarte(carte3);
+	myDeck.sauvegarderCartes();
+	
+	myDeck.afficherDeck();
+	return 0;
+
+
+	
 	
 
 

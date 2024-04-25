@@ -44,5 +44,47 @@ void Deck::chargerCartes()
         CarteDeRevision carte = deserialiserCarte(ligne);
         deck_.push_back(new CarteDeRevision(carte)); //utilisation du constructeur de copie de CarteDeRevision
     }
+}
 
+void Deck::sauvegarderCartes() const
+{
+    ofstream fichier(fichierCSV_);
+    if (!fichier) {
+        cerr << "Erreur : Impossible d'ouvrir le fichier" << endl;
+        return;
+    }
+    for (int i = 0; i < deck_.size(); i++)
+    {
+        const CarteDeRevision* carte = deck_[i];
+        string newligne = serialiserCarte(*carte);
+        fichier << newligne << endl;
+    }
+}
+
+void Deck::ajouterCarte(const CarteDeRevision& carte)
+{
+    deck_.push_back(new CarteDeRevision(carte));
+}
+
+void Deck::supprimerCarte(int index)
+{
+    if (index < deck_.size() && index >= 0) // && permet d'avoir une condition en "et"
+    {
+        delete deck_[index]; // libère l'espace de l'élément dans la mémoire mais ne supprime pas effectivement l'élément
+        deck_.erase(deck_.begin() + index);// supprime l'élément et déplace les éléments suivant pour ajuster la taille du vecteur
+    }
+    else
+    {
+        cerr << "Index fourni invalide" << endl;
+    }
+}
+
+void Deck::afficherDeck() const
+{
+    cout << "-------------------- Cartes dans le Deck --------------------" << endl;
+    cout << endl;
+    for (const CarteDeRevision* carte : deck_) //autre méthode de parcours
+    {
+        cout << "Recto : " << carte->getRecto() << " , Verso : " << carte->getVerso() << endl;//Utilisation de -> car getRecto est dans la classe CarteDeRevision
+    }
 }
