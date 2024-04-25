@@ -60,6 +60,9 @@ public:
 
     ////Méthode pour changer la prochaine date de  révision
     // void setDateRevision (const string & nouvelle_date)
+
+    //// Méthode pour avoir la prochaine date de révision:
+    // void getDateRevision() const {return date_revision_;}
 };
 
 
