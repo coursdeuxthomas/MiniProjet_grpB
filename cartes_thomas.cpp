@@ -45,6 +45,7 @@ void Deck::chargerCartes()
         deck_.push_back(new CarteDeRevision(carte)); //utilisation du constructeur de copie de CarteDeRevision
     }
 }
+//meme pb ici que en dessous je pense juste avant de charger les éléments du csv il faut vider le deck puis sinon si on charge deux fois à la suite après avoir rajouté quelque cartes dans le csv ça va faire un doublon de deck
 
 void Deck::sauvegarderCartes() const
 {
@@ -59,7 +60,7 @@ void Deck::sauvegarderCartes() const
         string newligne = serialiserCarte(*carte);
         fichier << newligne << endl;
     }
-}
+}// attnetion pb ça rajouter des ligne au fichier à la fin donc peut créer des doublons si le deck à déjà été suavegarder. Mon idée c'est dès que tu veux sauvegarder tu dois d'abord effacer tous ce qui est dans le fichier.
 
 void Deck::ajouterCarte(const CarteDeRevision& carte)
 {

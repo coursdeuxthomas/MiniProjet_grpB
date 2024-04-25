@@ -27,17 +27,12 @@ int main()
 	cout << "Recto de la carte deseria : " << carteDeseria.getRecto() << endl;
 	cout << "Verso de la carte deseria : " << carteDeseria.getVerso() << endl;*/  
 
-	Deck myDeck("fichierCSV");
-	CarteDeRevision carte0("recto", "verso");
-	CarteDeRevision carte1("Capitale France ?", "Paris");
-	CarteDeRevision carte2("Nom du frère", "Bastien");
-	CarteDeRevision carte3("doliprane", "paracetamol");
+	Deck myDeck("fichierCSV.csv");
 	myDeck.chargerCartes();
-	myDeck.ajouterCarte(carte0);
-	myDeck.ajouterCarte(carte1);
-	myDeck.ajouterCarte(carte2);
-	myDeck.ajouterCarte(carte3);
-	myDeck.sauvegarderCartes();
+
+
+
+	
 	
 	myDeck.afficherDeck();
 	return 0;
