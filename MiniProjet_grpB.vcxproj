@@ -134,6 +134,7 @@
     <ClCompile Include="cartes_paul.cpp" />
     <ClCompile Include="cartes_thomas.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="test-sfml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cartes_paul.h" />
