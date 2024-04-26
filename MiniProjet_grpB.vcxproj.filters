@@ -24,6 +24,9 @@
     <ClCompile Include="cartes_paul.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="test-sfml.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cartes_thomas.h">

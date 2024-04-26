@@ -11,7 +11,7 @@
 
 using namespace std;
 
-int main() 
+int main()
 {
 	SetConsoleOutputCP(65001);
 	/*CarteDeRevision pythagore("Théorême de Pythagore","La somme des carré des cotés égale au carré de l'hypo");
