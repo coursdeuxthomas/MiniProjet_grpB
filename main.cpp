@@ -28,7 +28,10 @@ int main()
 	cout << "Verso de la carte deseria : " << carteDeseria.getVerso() << endl;*/  
 
 	Deck myDeck("fichierCSV.csv");
+	CarteDeRevision carte0("capitale", "paris");
+	myDeck.ajouterCarte(carte0);
 	myDeck.chargerCartes();
+	myDeck.sauvegarderCartes();
 
 
 
