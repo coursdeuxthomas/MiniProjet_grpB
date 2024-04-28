@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="application.cpp" />
     <ClCompile Include="cartes_paul.cpp" />
     <ClCompile Include="cartes_thomas.cpp" />
     <ClCompile Include="main.cpp" />
