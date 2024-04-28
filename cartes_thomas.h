@@ -9,6 +9,7 @@
 #include <ctime>
 #include <cstdio>
 #include <algorithm>
+#include <SFML/Graphics.hpp>
 using namespace std;
 
 class CarteDeRevision {
@@ -40,7 +41,7 @@ public:
     static string getDateActuelle();
 
     void MajIntervalleRevision(const int& scoreUx);// Calcule l'intervalle à ajouter à la date pour avoit la prochaine date de révision
-
+    void afficherCarte(sf::RenderWindow window, sf::Event& event);
 
 
 }; //THOMAS.B

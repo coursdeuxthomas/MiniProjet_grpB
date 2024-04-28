@@ -97,6 +97,46 @@ string CarteDeRevision::getDateActuelle() { //à relire et comprendre
     return string(date);
 }
 
+void CarteDeRevision::afficherCarte(sf::RenderWindow window, sf::Event& event) {
+    sf::Texture texture;
+    string image = recto_;
+    if (!texture.loadFromFile(image))
+    {
+        cout << "erreur";
+
+    }
+    sf::Sprite sprite;
+
+    sprite.setTexture(texture);
+    sprite.setPosition(500, 200);
+
+    // On efface la fenêtre (en blanc)
+    window.clear(sf::Color::White);
+
+    // Affichage du sprite
+    window.draw(sprite);
+
+
+    // Mise à jour de la fenêtre
+    window.display();
+    if ((event.type == sf::Event::MouseButtonPressed)
+        && (event.mouseButton.button == sf::Mouse::Left)) {
+        image = verso_;
+        if (!texture.loadFromFile(image))
+        {
+            cout << "erreur";
+
+        }
+
+        sprite.setTexture(texture);
+        sprite.setPosition(500, 200);
+        window.clear(sf::Color::White);
+
+        window.draw(sprite);
+
+        window.display();
+    }
+}
 
 //Méthode classe Deck
 
