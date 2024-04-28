@@ -156,6 +156,7 @@ CarteDeRevision Deck::deserialiserCarte(const string& ligneCSV)
 
 void Deck::chargerCartes()
 {
+    deck_.clear();
     ifstream fichier(fichierCSV_); // ouvrir fichier en mode lecteur
     if (!fichier) {
         cerr << "Erreur : Impossible d'ouvrir le fichier" << endl;
