@@ -3,6 +3,12 @@
 using namespace std;
 
 // Méthode classe CarteDeRevision
+
+void CarteDeRevision::setNom(const string& nom)
+{
+    this->nom_ = nom;
+}
+
 void CarteDeRevision::setRecto(const string& recto)
 {
     this->recto_ = recto; // Définit le contenu du côté recto de la carte avec la valeur fournie en param 
@@ -42,6 +48,53 @@ void CarteDeRevision::MajIntervalleRevision(const int& scoreUx)
     if (facteur_difficulte_ < 1.3) {
         facteur_difficulte_ = 1.3;
     }
+
+    if (date_ != "AAAA-MM-JJ") { //à relire et comprendre
+        // Convertir la date actuelle en année, mois et jour
+        int year, month, day;
+        if (sscanf_s(date_.c_str(), "%d-%d-%d", &year, &month, &day) == 3);
+
+        // Ajouter l'intervalle de révision aux jours
+        day += intervalle_revision_;
+
+        // Vérifier si le mois a changé
+        while (day > 30) {
+            month++;
+            day -= 30;
+        }
+
+        // Vérifier si l'année a changé
+        while (month > 12) {
+            year++;
+            month -= 12;
+        }
+
+        // Formater la nouvelle date
+        stringstream ss;
+        ss << setw(4) << setfill('0') << year << "-" << setw(2) << setfill('0') << month << "-" << setw(2) << setfill('0') << day;
+        date_ = ss.str();
+    }
+
+
+    //supprimer la carte déja presente dans le deck et ajouter cette nouvelle carte mise à jour
+    //supprimerCarte(this->getNom());
+    //deck.ajouterCarte(*this); //Utilisation de l'opérateur *, j'accède à lobjet carte sur lequel pointe this
+
+}
+
+string CarteDeRevision::getDateActuelle() { //à relire et comprendre
+    // Obtenir le temps actuel
+    time_t t = time(nullptr);
+    struct tm tm;
+
+    // Convertir le temps en structure tm contenant l'année, le mois et le jour actuels
+    localtime_s(&tm, &t);
+
+    // Formater la date actuelle
+    char date[11]; // "AAAA-MM-JJ" + caractère nul
+    sprintf_s(date, "%d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+
+    return string(date);
 }
 
 
@@ -95,9 +148,9 @@ void Deck::sauvegarderCartes() const
 }// attnetion pb ça rajouter des ligne au fichier à la fin donc peut créer des doublons si le deck à déjà été suavegarder. Mon idée c'est dès que tu veux sauvegarder tu dois d'abord effacer tous ce qui est dans le fichier.
 //pb semble résolu si on ne mélange pas l'utilsation des deux méthode cahrger et sauvegarder dans le main. On a choisit de garder l'utilisation de sauvegarder pour que l'ux crée les carte direct depuis l'interface SFML donc le main, les carte seront ensuite save dans le csv grace à la méthode sauvegarder.
 
-void Deck::ajouterCarte(const CarteDeRevision& carte)
+void Deck::ajouterCarte(CarteDeRevision* carte)
 {
-    deck_.push_back(new CarteDeRevision(carte));
+    deck_.push_back(carte);// attention c'est un constructeur de copie de la carte, pb que je rencontre : je fais une modification sur la carte après l'avoir mise dans le deck, et la carte présente dans le carte n'est pas modifié car c'est une copie.
 }
 
 void Deck::supprimerCarte(int index)
@@ -113,13 +166,67 @@ void Deck::supprimerCarte(int index)
     }
 }
 
+void Deck::supprimerCarte(const string& nom)
+{
+    vector<CarteDeRevision*>::iterator it;//marche mais voir si pas mieux de déclarer it dans la boucle for avce un type auto
+    for (it = deck_.begin(); it != deck_.end(); it++)
+    {
+        if ((*it)->getNom() == nom)
+        {
+            delete* it;
+            deck_.erase(it);
+            return;
+        }
+    }
+    cout << "Carte portant le nom " << nom << "n'a pas été trouvée shehh" << endl;
+
+}
+
 void Deck::afficherDeck() const
 {
     cout << "-------------------- Cartes dans le Deck --------------------" << endl;
     cout << endl;
-    for (const CarteDeRevision* carte : deck_) //autre méthode de parcours
+    for (int i = 0; i < deck_.size(); i++) //autre méthode de parcours
     {
-        cout << "Recto : " << carte->getRecto() << " , Verso : " << carte->getVerso() << endl;//Utilisation de -> car getRecto est dans la classe CarteDeRevision
+        const CarteDeRevision* carte = deck_[i];
+        cout << "Index de la carte : " << i << ", Nom de la carte : " << carte->getNom() << ", Recto : " << carte->getRecto() << ", Verso : " << carte->getVerso() << ", Facteur de difficulté : " << carte->getFacteurDifficulte() << ", Série : " << carte->getSerie() << ", Date de la prochaine révision : " << carte->getDate() << endl;//Utilisation de -> car getRecto est dans la classe CarteDeRevision
     }
 }
 
+const CarteDeRevision& Deck::getCarte(int index) const
+{
+    if (index >= 0 && index < deck_.size()) {
+        return *deck_[index];
+    }
+    else {
+        throw out_of_range("Index hors limites");
+    }
+}
+
+const vector<CarteDeRevision*>& Deck::getDeck() const
+{
+    return deck_;
+}
+
+
+
+//Méthode de la classe Session de Révision
+
+void SessionRevision::CarteDuJour()
+{
+    string dateActuelle = CarteDeRevision::getDateActuelle();
+    session_.clear();
+    const vector<CarteDeRevision*>& deck = getDeck();
+    for (size_t i = 0; i < deck.size(); i++)
+    {
+        if (deck[i]->getDate() <= dateActuelle)
+        {
+            session_.push_back(deck[i]);
+        }
+    }
+}
+
+void SessionRevision::afficherDeck() const
+{
+    Deck::afficherDeck();
+}

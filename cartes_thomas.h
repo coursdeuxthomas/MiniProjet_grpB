@@ -5,10 +5,15 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
+#include <ctime>
+#include <cstdio>
+#include <algorithm>
 using namespace std;
 
 class CarteDeRevision {
 private:
+    string nom_;
     string recto_;
     string verso_;
     // il faut rajouter les facteurs pour l'algorithme sm2 : le facteur de difficulté (type double), le score de difficulté (différent du facteur, de type entier entre 1 et 5) et la date de PROCHAINE révision (au format : "AAAA-MM-JJ")
@@ -17,9 +22,12 @@ private:
     //int score_difficulte_; pas dans la classe carte 
     int serie_; // nombre n que j'ai appelé serie dont tu m'avais parlé mais à voire
     int intervalle_revision_;
+    string date_;
 public:
     // Constructeur
-    CarteDeRevision(const string& recto = "a", const string& verso = "a") : recto_(recto), verso_(verso), facteur_difficulte_(2.5), serie_(0), intervalle_revision_(0) {}
+    CarteDeRevision(const string& nom = "a", const string& recto = "a", const string& verso = "a", const string& date = "AAAA-MM-JJ") : nom_(nom), recto_(recto), verso_(verso), facteur_difficulte_(2.5), serie_(0), intervalle_revision_(0), date_(date) {} //attention faire focntion date actuelle au dessus du main pour avoir et mettre dans le constructeur
+    const string& getNom() const { return nom_; }
+    void setNom(const string& nom);
     const string& getRecto() const { return recto_; }
     void setRecto(const string& recto);
     const string& getVerso() const { return verso_; }
@@ -28,8 +36,10 @@ public:
     void setIntervalle(const int& I);
     const double& getFacteurDifficulte() const { return facteur_difficulte_; }
     const int& getSerie() const { return serie_; }
+    const string& getDate() const { return date_; }
+    static string getDateActuelle();
 
-    void MajIntervalleRevision(const int& scoreUx);
+    void MajIntervalleRevision(const int& scoreUx);// Calcule l'intervalle à ajouter à la date pour avoit la prochaine date de révision
 
 
 
@@ -61,15 +71,33 @@ public:
     void sauvegarderCartes() const;
 
     // Méthode pour ajouter une carte au deck
-    void ajouterCarte(const CarteDeRevision& carte);
+    void ajouterCarte(CarteDeRevision* carte);// carte passé par référence posait problème et pointeur est ok.
 
-    // Méthode pour supprimer une carte du deck
+    // Méthode pour supprimer une carte du deck à partir de l'index de la carte (pb lorsque une carte est supprimer l'indice change donc difficile d'utiliser cette méthode lorsque le deck n'est pas affichée et que l'on a pas l'indice de la carte.Tout ça pour utuliser correctement la méthode de majintervallerévision et mettre à jour correctemement les cartes de révison apres une séance de révsion
     void supprimerCarte(int index);
 
-    //Méthode afficher
-    void afficherDeck() const;
-};
+    void supprimerCarte(const string& nom);
 
+    //Méthode afficher
+    virtual void afficherDeck() const;
+
+    //Accesseur du deck
+    const vector<CarteDeRevision*>& getDeck() const;
+
+    const CarteDeRevision& getCarte(int index) const;
+}; //THOMAS.B
+
+class SessionRevision : public Deck // La classe SessionRevision dérive de la classe Deck (héritage)
+{
+private:
+    vector<CarteDeRevision*> session_;
+
+public:
+    SessionRevision(const string& fichierCSV) : Deck(fichierCSV) {} //attention à bien placer le constructeur deck dans le constructeur session de révision
+    void CarteDuJour();
+    void afficherDeck() const;
+
+};
 
 
 
