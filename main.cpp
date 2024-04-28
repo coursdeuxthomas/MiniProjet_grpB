@@ -139,8 +139,8 @@ int main()
 	SessionRevision Session1("sessionCSV.csv");
 	string dateActuelle = CarteDeRevision::getDateActuelle();
 	cout << dateActuelle << endl;
-	CarteDeRevision* carte0 = new CarteDeRevision("carte0", "capitale", "paris", "2000-01-01");
-	CarteDeRevision* carte1 = new CarteDeRevision("carte1", "maman", "sylvie", "2000-01-01");
+	CarteDeRevision* carte0 = new CarteDeRevision("carte0", "capitale", "paris", "2022-01-01");
+	CarteDeRevision* carte1 = new CarteDeRevision("carte1", "maman", "sylvie", "2025-01-01");
 	//CarteDeRevision carte0("carte0", "capitale", "paris", dateActuelle);
 	//CarteDeRevision carte1("carte1", "maman", "sylvie", dateActuelle);
 	Mydeck.ajouterCarte(carte0);
@@ -148,8 +148,33 @@ int main()
 	carte0->MajIntervalleRevision(4);
 	Mydeck.afficherDeck();
 
-	Session1.CarteDuJour();
-	Session1.afficherDeck();
+	Session1.CarteDuJour(Mydeck);
+	Session1.afficherSession();
+
+	//// Comparaison de différentes dates
+	//bool result1 = SessionRevision::comparerDates("2022-04-30", "2022-05-01");
+	//bool result2 = SessionRevision::comparerDates("2022-05-01", "2022-04-30");
+	//bool result3 = SessionRevision::comparerDates("2022-05-01", "2022-05-01");
+	//bool result4 = SessionRevision::comparerDates("2023-01-01", "2022-12-31");
+
+	//// Affichage des résultats
+	//std::cout << std::boolalpha; // Pour afficher true/false au lieu de 1/0
+	//std::cout << "Resultat 1 : " << result1 << std::endl;
+	//std::cout << "Resultat 2 : " << result2 << std::endl;
+	//std::cout << "Resultat 3 : " << result3 << std::endl;
+	//std::cout << "Resultat 4 : " << result4 << std::endl;
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 

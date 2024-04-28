@@ -9,7 +9,6 @@
 #include <ctime>
 #include <cstdio>
 #include <algorithm>
-#include <SFML/Graphics.hpp>
 using namespace std;
 
 class CarteDeRevision {
@@ -41,7 +40,6 @@ public:
     static string getDateActuelle();
 
     void MajIntervalleRevision(const int& scoreUx);// Calcule l'intervalle à ajouter à la date pour avoit la prochaine date de révision
-    void afficherCarte(sf::RenderWindow& window);
 
 
 
@@ -54,7 +52,7 @@ private:
 
 public:
     //Constructeur
-    Deck(const string& fichierCSV) : fichierCSV_(fichierCSV) {}
+    Deck(const string& fichierCSV = "a") : fichierCSV_(fichierCSV) {}
 
     //Le constructeur Deck est initialisé avec le chemin vers le fichierCSV et il prend la valeur de vector<CarteDeRevision *> deck_ par défaut qui est le vecteur vide.
 
@@ -84,7 +82,7 @@ public:
     virtual void afficherDeck() const;
 
     //Accesseur du deck
-    const vector<CarteDeRevision*>& getDeck() const;
+    const vector<CarteDeRevision*> getDeck() const;
 
     const CarteDeRevision& getCarte(int index) const;
 }; //THOMAS.B
@@ -96,9 +94,9 @@ private:
 
 public:
     SessionRevision(const string& fichierCSV) : Deck(fichierCSV) {} //attention à bien placer le constructeur deck dans le constructeur session de révision
-    void CartesDuJour();
-    void afficherDeck() const;
-
+    void CarteDuJour(const Deck fouretout);
+    void afficherSession() const; //tester au préalable en virtual mais on rencontre un problème dans le parcours de session_ .
+    static bool comparerDates(const string& date1, const string& date2);
 };
 
 

@@ -97,13 +97,12 @@ string CarteDeRevision::getDateActuelle() { //à relire et comprendre
     return string(date);
 }
 
-void CarteDeRevision::
 
 //Méthode classe Deck
 
 string Deck::serialiserCarte(const CarteDeRevision& carte)
 {
-    return carte.getRecto() + "," + carte.getVerso(); // rajouter facteur difficulté, date
+    return carte.getRecto() + "," + carte.getVerso();
 }
 
 CarteDeRevision Deck::deserialiserCarte(const string& ligneCSV)
@@ -204,7 +203,7 @@ const CarteDeRevision& Deck::getCarte(int index) const
     }
 }
 
-const vector<CarteDeRevision*>& Deck::getDeck() const
+const vector<CarteDeRevision*> Deck::getDeck() const
 {
     return deck_;
 }
@@ -213,21 +212,53 @@ const vector<CarteDeRevision*>& Deck::getDeck() const
 
 //Méthode de la classe Session de Révision
 
-void SessionRevision::CartesDuJour()
+bool SessionRevision::comparerDates(const string& date1, const string& date2)
+{
+    tm tm1 = {};
+    tm tm2 = {};
+
+    sscanf_s(date1.c_str(), "%d-%d-%d", &tm1.tm_year, &tm1.tm_mon, &tm1.tm_mday);
+    sscanf_s(date2.c_str(), "%d-%d-%d", &tm2.tm_year, &tm2.tm_mon, &tm2.tm_mday);
+
+    // Ajuster les mois (tm_mon est de 0 à 11)
+    tm1.tm_mon -= 1;
+    tm2.tm_mon -= 1;
+
+    tm1.tm_year -= 1900;
+    tm2.tm_year -= 1900;
+
+    // Convertir les structures tm en time_t (en secondes depuis l'époque)
+    time_t time1 = mktime(&tm1);
+    time_t time2 = mktime(&tm2);
+
+    // Comparer les valeurs de temps
+    return time1 <= time2;
+}
+
+void SessionRevision::CarteDuJour(const Deck fouretout)
 {
     string dateActuelle = CarteDeRevision::getDateActuelle();
     session_.clear();
-    const vector<CarteDeRevision*>& deck = getDeck();
+    vector<CarteDeRevision*> deck = fouretout.getDeck();
+
     for (size_t i = 0; i < deck.size(); i++)
     {
-        if (deck[i]->getDate() <= dateActuelle)
+        string datecarte = deck[i]->getDate();
+        cout << datecarte << endl;
+        if (comparerDates(datecarte, dateActuelle))
         {
             session_.push_back(deck[i]);
         }
     }
 }
 
-void SessionRevision::afficherDeck() const
+void SessionRevision::afficherSession() const
 {
-    Deck::afficherDeck();
+    cout << "-------------------- Cartes dans la Session --------------------" << endl;
+    cout << endl;
+    for (int i = 0; i < session_.size(); i++) //autre méthode de parcours
+    {
+        const CarteDeRevision* carte = session_[i];
+        cout << "Index de la carte : " << i << ", Nom de la carte : " << carte->getNom() << ", Recto : " << carte->getRecto() << ", Verso : " << carte->getVerso() << ", Facteur de difficulté : " << carte->getFacteurDifficulte() << ", Série : " << carte->getSerie() << ", Date de la prochaine révision : " << carte->getDate() << endl;//Utilisation de -> car getRecto est dans la classe CarteDeRevision
+    }
 }
