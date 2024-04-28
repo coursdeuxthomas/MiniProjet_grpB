@@ -97,7 +97,7 @@ string CarteDeRevision::getDateActuelle() { //à relire et comprendre
     return string(date);
 }
 
-void CarteDeRevision::afficherCarte(sf::RenderWindow window, sf::Event& event) {
+void CarteDeRevision::afficherCarte(sf::RenderWindow &window, sf::Event& event) {
     sf::Texture texture;
     string image = recto_;
     if (!texture.loadFromFile(image))

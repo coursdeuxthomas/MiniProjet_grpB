@@ -41,7 +41,7 @@ public:
     static string getDateActuelle();
 
     void MajIntervalleRevision(const int& scoreUx);// Calcule l'intervalle à ajouter à la date pour avoit la prochaine date de révision
-    void afficherCarte(sf::RenderWindow window, sf::Event& event);
+    void afficherCarte(sf::RenderWindow & window, sf::Event& event);
 
 
 }; //THOMAS.B
@@ -94,7 +94,7 @@ private:
     vector<CarteDeRevision*> session_;
 
 public:
-    SessionRevision(const string& fichierCSV) : Deck(fichierCSV) {} //attention à bien placer le constructeur deck dans le constructeur session de révision
+    SessionRevision(const string& fichierCSV="a") : Deck(fichierCSV) {} //attention à bien placer le constructeur deck dans le constructeur session de révision
     void CarteDuJour(const Deck fouretout);
     void afficherSession() const; //tester au préalable en virtual mais on rencontre un problème dans le parcours de session_ .
     static bool comparerDates(const string& date1, const string& date2);

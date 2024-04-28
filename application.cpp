@@ -2,7 +2,7 @@
 #include <thread>
 #include <SFML/Graphics.hpp>
 #include "cartes_thomas.h"
-#include "cartes_paul.h"
+
 
 using namespace std;
 
@@ -14,7 +14,7 @@ class Application
     std::thread windowThread_;
     enum windowState { terminate, hidden, visible } windowState_;
 public:
-    Application();
+    Application(Deck MyDeck,SessionRevision MySessionRevision);
     int printMenu();
     bool processMenuChoice(int choice);
     void processWindow(sf::RenderWindow& window);
@@ -22,12 +22,15 @@ public:
     void execute();
 };
 
-Application::Application()
+Application::Application(Deck MyDeck, SessionRevision MySessionRevision)
 
 // create and process the window in a separate thread
     : windowState_(hidden), windowThread_(&Application::runWindowThread, this)
 {
+    
     MyDeck.chargerCartes();
+    MySessionRevision = MySessionRevision;
+  
 }
 
 
@@ -76,27 +79,27 @@ bool Application::processMenuChoice(int choice)
         break;
     }
     case 2: {
-        cout << "Veuillez entrer le numero de la carte à supprimer : " << endl;
+        cout << "Veuillez entrer le numero de la carte a supprimer : " << endl;
         int n; // on peut mettre auto pour enlever case 3
         cin >> n;
         MyDeck.supprimerCarte(n);
         break;
     }
     case 3: {
-        cout << "Veuillez entrer le nom de la carte à supprimer : " << endl;
+        cout << "Veuillez entrer le nom de la carte a supprimer : " << endl;
         cin >> entree;
         MyDeck.supprimerCarte(entree);
         break;
     }
     case 4: {
-        MySessionRevision.CartesDuJour();// le deck crée);
+        MySessionRevision.CarteDuJour(MyDeck);// le deck crée);
         windowState_ = windowState::visible ;
         //windowState_ = windowState::hidden; // le mettre plutot à la fin de l'affichage des cartes
         //cout << "Session terminée" << endl;
         break;
     }
     case 5: {
-        Deck.AfficherCartes();
+        MyDeck.afficherDeck();
         break;
     }
     case 6:
@@ -141,7 +144,7 @@ void Application::processWindow(sf::RenderWindow& window)
             }
             
             for (int i = 0; i < session.size(); i++) {
-                session[i]->afficherCarte(window);
+                session[i]->afficherCarte(window,event);
                 cout << "Entrez une note entre 0 et 5" << endl;
                 int d;
                 cin >> d;
@@ -164,7 +167,8 @@ void Application::runWindowThread()
 {
     sf::RenderWindow window(sf::VideoMode(200, 200), "Session de Revision"); // penser à augmenter la taille de la fenêtre
     processWindow(window);
-    cout << "Session commencée" << endl;
+    /*cout << "Session commencée";*/
+    ;
 }
 
 
@@ -187,7 +191,9 @@ void Application::execute()
 
 int main()
 {
-    Application app;
+    Deck MyDeck("fichierCSV.csv");
+    SessionRevision MySessionRevision("fichierCSV.csv");
+    Application app(MyDeck,MySessionRevision);
     app.execute();
     return 0;
 }
