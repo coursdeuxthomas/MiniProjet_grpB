@@ -1,4 +1,4 @@
-﻿#include "cartes_thomas.h"
+﻿#include "cartes.h"
 #include <iostream>
 using namespace std;
 

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <SFML/Graphics.hpp>
-#include "cartes_thomas.h"
+#include "cartes.h"
 
 
 using namespace std;

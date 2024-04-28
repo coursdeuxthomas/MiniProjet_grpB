@@ -132,12 +132,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
-    <ClCompile Include="cartes_paul.cpp" />
-    <ClCompile Include="cartes_thomas.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="cartes.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cartes_thomas.h" />
+    <ClInclude Include="cartes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
