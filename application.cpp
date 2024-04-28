@@ -9,7 +9,8 @@ using namespace std;
 
 class Application
 {
-    /*sf::CircleShape circle_;*/ // mettre un champ session
+    Deck MyDeck;
+    SessionRevision MySessionRevision;
     std::thread windowThread_;
     enum windowState { terminate, hidden, visible } windowState_;
 public:
@@ -26,10 +27,7 @@ Application::Application()
 // create and process the window in a separate thread
     : windowState_(hidden), windowThread_(&Application::runWindowThread, this)
 {
-    /*circle_.setRadius(100);
-    circle_.setOrigin(100, 100);
-    circle_.setFillColor(sf::Color::Green);*/
-    // afficher la première carte à réviser
+    MyDeck.chargerCartes();
 }
 
 
@@ -69,11 +67,9 @@ bool Application::processMenuChoice(int choice)
         cin >> recto;
         cout << "Veuillez entrer le chemin du verso : " << endl;
         cin >> verso;
-        
-        date = DateActuelle();
+        date =CarteDeRevision:: getDateActuelle();
         CarteDeRevision * nouvelleCarte = new CarteDeRevision(nom, recto, verso, date);
         MyDeck.ajouterCarte(nouvelleCarte);
-        MyDeck.serialiserCarte(nouvelleCarte);
         MyDeck.sauvegarderCartes();
 
         // mettre méthodes pour ajouter au deck,serialiser et sauvegarder et initialiser la date aussi
@@ -93,8 +89,8 @@ bool Application::processMenuChoice(int choice)
         break;
     }
     case 4: {
-        MySessionRevision.CartesDuJour(// le deck crée);
-            windowState_ = windowState::visible ;
+        MySessionRevision.CartesDuJour();// le deck crée);
+        windowState_ = windowState::visible ;
         //windowState_ = windowState::hidden; // le mettre plutot à la fin de l'affichage des cartes
         //cout << "Session terminée" << endl;
         break;
@@ -117,6 +113,7 @@ bool Application::processMenuChoice(int choice)
 
 void Application::processWindow(sf::RenderWindow& window)
 {
+    vector<CarteDeRevision*> session = MySessionRevision.getDeck();
     while (window.isOpen() && windowState_ != windowState::terminate) {
 
         // set the window visible or not visible
@@ -142,26 +139,22 @@ void Application::processWindow(sf::RenderWindow& window)
             if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)) {
                 windowState_ = windowState::hidden;
             }
+            
+            for (int i = 0; i < session.size(); i++) {
+                session[i]->afficherCarte(window);
+                cout << "Entrez une note entre 0 et 5" << endl;
+                int d;
+                cin >> d;
+                while (d < 0 && d>5) {
+                    cout << "t'es un gros nul, apprend à lire" << endl;
+                    cin >> d;
+                }
+            }
+
+            
+
+
         }
-
-        //// Clear the window
-        //window.clear();
-        //// Set the circle in the center of the window
-        //sf::Vector2u size = window.getSize();
-        //circle_.setPosition(size.x / 2.f, size.y / 2.f);
-        //// Draw the circle
-        //window.draw(circle_);
-        //// Display the window
-        //window.display();
-        //// Make the thread sleep few time
-        //sf::sleep(sf::milliseconds(10));
-        // Deck.reviser
-        // Afficher Carte avec boucle et size du vector et demander note à chaque fois
-        // Afficher CarteRecto
-        // event mousebuttonpressed
-        // Afficher CarteVerso
-        // event mousebutton pressed et i<taille du vector alors on change de carte et on recommence la boucle
-
 
     }
 }

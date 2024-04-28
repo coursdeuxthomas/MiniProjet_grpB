@@ -97,12 +97,13 @@ string CarteDeRevision::getDateActuelle() { //à relire et comprendre
     return string(date);
 }
 
+void CarteDeRevision::
 
 //Méthode classe Deck
 
 string Deck::serialiserCarte(const CarteDeRevision& carte)
 {
-    return carte.getRecto() + "," + carte.getVerso();
+    return carte.getRecto() + "," + carte.getVerso(); // rajouter facteur difficulté, date
 }
 
 CarteDeRevision Deck::deserialiserCarte(const string& ligneCSV)
@@ -212,7 +213,7 @@ const vector<CarteDeRevision*>& Deck::getDeck() const
 
 //Méthode de la classe Session de Révision
 
-void SessionRevision::CarteDuJour()
+void SessionRevision::CartesDuJour()
 {
     string dateActuelle = CarteDeRevision::getDateActuelle();
     session_.clear();
