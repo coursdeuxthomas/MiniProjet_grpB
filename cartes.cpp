@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-// Méthode classe CarteDeRevision
+// Méthode classe CarteDeRevision 
 
 void CarteDeRevision::setNom(const string& nom)
 {
@@ -97,7 +97,7 @@ string CarteDeRevision::getDateActuelle() { //à relire et comprendre
     return string(date);
 }
 
-void CarteDeRevision::afficherCarte(sf::RenderWindow &window, sf::Event& event) {
+void CarteDeRevision::afficherCarte(sf::RenderWindow &window, sf::Event& event) { //Affiche le recto puis lorsque l'on clique sur le bouton gauche de la souris, le verso apparait
     sf::Texture texture;
     string image = recto_;
     if (!texture.loadFromFile(image))
@@ -186,7 +186,7 @@ void Deck::sauvegarderCartes() const
         string newligne = serialiserCarte(*carte);
         fichier << newligne << endl;
     }
-}// attnetion pb ça rajouter des ligne au fichier à la fin donc peut créer des doublons si le deck à déjà été suavegarder. Mon idée c'est dès que tu veux sauvegarder tu dois d'abord effacer tous ce qui est dans le fichier.
+}// attention pb ça rajouter des ligne au fichier à la fin donc peut créer des doublons si le deck à déjà été suavegarder. Mon idée c'est dès que tu veux sauvegarder tu dois d'abord effacer tous ce qui est dans le fichier.
 //pb semble résolu si on ne mélange pas l'utilsation des deux méthode cahrger et sauvegarder dans le main. On a choisit de garder l'utilisation de sauvegarder pour que l'ux crée les carte direct depuis l'interface SFML donc le main, les carte seront ensuite save dans le csv grace à la méthode sauvegarder.
 
 void Deck::ajouterCarte(CarteDeRevision* carte)

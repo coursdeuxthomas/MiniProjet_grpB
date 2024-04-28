@@ -7,12 +7,12 @@
 using namespace std;
 
 
-class Application
+class Application //Classe réalisée par Paul
 {
     Deck MyDeck;
     SessionRevision MySessionRevision;
     std::thread windowThread_;
-    enum windowState { terminate, hidden, visible } windowState_;
+    enum windowState { terminate, hidden, visible } windowState_; // on possède 3 états pour la fenêtre : soit cachée, soit visible mais non fermée et terminate = fermée 
 public:
     Application(Deck MyDeck,SessionRevision MySessionRevision);
     int printMenu();
@@ -34,7 +34,7 @@ Application::Application(Deck MyDeck, SessionRevision MySessionRevision)
 }
 
 
-int Application::printMenu()
+int Application::printMenu() // Affiche le menu dans la console
 {
     int choice;
 
@@ -57,7 +57,7 @@ int Application::printMenu()
 
 // créer un deck au début du main
 
-bool Application::processMenuChoice(int choice)
+bool Application::processMenuChoice(int choice) // permet de recevoir le choix de l'utilisateur et d'agir selon le cas
 {
     bool finished = false;
     string nom, recto, verso, date, entree;
@@ -70,12 +70,10 @@ bool Application::processMenuChoice(int choice)
         cin >> recto;
         cout << "Veuillez entrer le chemin du verso : " << endl;
         cin >> verso;
-        date =CarteDeRevision:: getDateActuelle();
+        date =CarteDeRevision:: getDateActuelle();// la date actuelle nous servira à chaque fois que l'on veut réviser, on regardera si le champ date de la classe de CarteDeRevision est antérieure ou identique à celle-ci
         CarteDeRevision * nouvelleCarte = new CarteDeRevision(nom, recto, verso, date);
         MyDeck.ajouterCarte(nouvelleCarte);
         MyDeck.sauvegarderCartes();
-
-        // mettre méthodes pour ajouter au deck,serialiser et sauvegarder et initialiser la date aussi
         break;
     }
     case 2: {
@@ -114,7 +112,7 @@ bool Application::processMenuChoice(int choice)
 
 
 
-void Application::processWindow(sf::RenderWindow& window)
+void Application::processWindow(sf::RenderWindow& window)// Afficher la fenêtre sfml quand l'utilisateur le demande
 {
     vector<CarteDeRevision*> session = MySessionRevision.getDeck();
     while (window.isOpen() && windowState_ != windowState::terminate) {
@@ -143,7 +141,7 @@ void Application::processWindow(sf::RenderWindow& window)
                 windowState_ = windowState::hidden;
             }
             
-            for (int i = 0; i < session.size(); i++) {
+            for (int i = 0; i < session.size(); i++) {// boucle qui affiche les cartes à réviser aujourd'hui, on attend une note à chaque carte dans la console
                 session[i]->afficherCarte(window,event);
                 cout << "Entrez une note entre 0 et 5" << endl;
                 int d;
@@ -172,7 +170,7 @@ void Application::runWindowThread()
 }
 
 
-void Application::execute()
+void Application::execute()// lancer l'application
 {
     int choice;
     bool finished;

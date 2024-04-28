@@ -12,7 +12,7 @@
 #include <SFML/Graphics.hpp>
 using namespace std;
 
-class CarteDeRevision {
+class CarteDeRevision { // Classe rélisée par Thomas
 private:
     string nom_;
     string recto_;
@@ -46,7 +46,7 @@ public:
 
 }; //THOMAS.B
 
-class Deck {
+class Deck { // Classe réalisée par Thomas
 private:
     vector<CarteDeRevision*> deck_; // Vecteur pour stocker les cartes
     string fichierCSV_; // Chemin vers le fichier CSV
@@ -89,7 +89,7 @@ public:
 }; //THOMAS.B
 
 class SessionRevision : public Deck // La classe SessionRevision dérive de la classe Deck (héritage)
-{
+{// Classe réalisée par Paul
 private:
     vector<CarteDeRevision*> session_;
 
